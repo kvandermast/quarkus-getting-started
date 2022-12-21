@@ -43,7 +43,7 @@ check.dependsOn dependencyCheckAnalyze
 
 dependencyCheck {
     failBuildOnCVSS = 11
-    suppressionFile = "$projectDir/../gradle/owasp-dependency-check-suppressions.xml"
+    suppressionFile = "$projectDir/gradle/owasp-dependency-check-suppressions.xml"
     analyzers {
         experimentalEnabled = false
         archiveEnabled = true
