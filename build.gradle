@@ -1,0 +1,67 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+
+    id "org.owasp.dependencycheck" version "7.1.0.1"
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation 'io.quarkus:quarkus-hibernate-validator'
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-resteasy-reactive'
+    implementation 'io.quarkus:quarkus-arc'
+    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.rest-assured:rest-assured'
+}
+
+group 'org.acme'
+version '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+test {
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
+}
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+check.dependsOn dependencyCheckAnalyze
+
+dependencyCheck {
+    failBuildOnCVSS = 11
+    suppressionFile = "$projectDir/../gradle/owasp-dependency-check-suppressions.xml"
+    analyzers {
+        experimentalEnabled = false
+        archiveEnabled = true
+        jarEnabled = true
+        centralEnabled = true
+        //nexusEnabled = true
+        pyDistributionEnabled = false
+        pyPackageEnabled = false
+        rubygemsEnabled = false
+        opensslEnabled = false
+        nuspecEnabled = false
+        assemblyEnabled = false
+        cmakeEnabled = false
+        autoconfEnabled = true
+        composerEnabled = false
+        nodeEnabled = true
+        //nspEnabled = false
+        //cocoapodsEnabled = false
+        //swiftEnabled = false
+    }
+}
