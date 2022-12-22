@@ -8,6 +8,6 @@ import javax.enterprise.context.ApplicationScoped;
 public class GreetingServiceImpl implements GreetingService {
     @Override
     public String greeting(String name) {
-        return String.format("Hello Mr. %s", name.toUpperCase());
+        return String.format("Hello %s", name.toUpperCase());
     }
 }
